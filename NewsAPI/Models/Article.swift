@@ -13,7 +13,6 @@ struct Article : Codable {
     let content : String?
     let descriptionField : String?
     let publishedAt : String?
-    let source : OneSource?
     let title : String?
     let url : String?
     let urlToImage : String?
@@ -24,7 +23,6 @@ struct Article : Codable {
         case content = "content"
         case descriptionField = "description"
         case publishedAt = "publishedAt"
-        case source
         case title = "title"
         case url = "url"
         case urlToImage = "urlToImage"
@@ -35,7 +33,6 @@ struct Article : Codable {
         content = try values.decodeIfPresent(String.self, forKey: .content)
         descriptionField = try values.decodeIfPresent(String.self, forKey: .descriptionField)
         publishedAt = try values.decodeIfPresent(String.self, forKey: .publishedAt)
-        source = try values.decodeIfPresent(OneSource.self, forKey: .source)
         title = try values.decodeIfPresent(String.self, forKey: .title)
         url = try values.decodeIfPresent(String.self, forKey: .url)
         urlToImage = try values.decodeIfPresent(String.self, forKey: .urlToImage)

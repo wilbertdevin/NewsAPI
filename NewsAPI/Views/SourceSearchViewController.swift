@@ -1,15 +1,15 @@
 //
-//  MainViewController.swift
+//  SourceSearchViewController.swift
 //  NewsAPI
 //
-//  Created by Wilbert Devin Wijaya on 24/02/23.
+//  Created by Wilbert Devin Wijaya on 26/02/23.
 //
 
 import UIKit
 import SnapKit
 import SafariServices
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class SourceSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     private let tableView: UITableView = {
         let table = UITableView()
@@ -27,8 +27,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.hidesSearchBarWhenScrolling = false
         title = "News"
 
         view.addSubview(tableView)
@@ -56,11 +54,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func fetchNews() {
-
         
-        let text = UserDefaults.standard.value(forKey: "source")
+        let text = UserDefaults.standard.value(forKey: "sourceSearch")
         
-        APICaller.shared.source(with: text as! String) { result in
+        APICaller.shared.sourceSearch(with: text as! String) { result in
             switch result {
             case .success(let articles):
                 self.articles = articles
@@ -145,6 +142,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 }
+
 
 
 

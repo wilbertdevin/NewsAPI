@@ -7,10 +7,13 @@
 
 import UIKit
 
-class SourceViewController: UITableViewController {
+class SourceViewController: UITableViewController, UISearchBarDelegate {
     
     let session = URLSession.shared
     let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=c8f93ef8504e4c42b5bacee31dc21aca")!
+    
+    private let searchVC = UISearchController(searchResultsController: nil)
+
     
     private var data: [Source] = []
     
@@ -29,13 +32,27 @@ class SourceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+
         title = "Source"
         
         tableView.register(SourceTableViewCell.self, forCellReuseIdentifier: String(describing: SourceTableViewCell.self))
         
         tableView.reloadData()
+        
+        createSearchBar()
+        
     }
+    
+    
+    private func createSearchBar() {
+        
+        navigationItem.searchController = searchVC
+        searchVC.searchBar.delegate = self
+        
+    }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -47,38 +64,28 @@ class SourceViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SourceTableViewCell.self)) as! SourceTableViewCell
         
         let temp = data[indexPath.row]
-        cell.accessoryType = temp.isSelected ? .checkmark : .none
         cell.sourceLabel.text = temp.name
-        
+
         return cell
         
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        data[indexPath.row].isSelected = !data[indexPath.row].isSelected
         tableView.reloadData()
-      
-    }
-    
-    @objc func doneButtonTapped() {
-        
-        let checkedSources = data.filter({ $0.isSelected })
-        let sourceID = checkedSources.map({$0.id})
+        print("DATA IS: \(data[indexPath.row])")
+        let dataIndex = data[indexPath.row]
 
-        let sourceString = checkedSources.flatMap({$0.id})
-        let strin = sourceString.joined(separator: ",")
-        let vc = MainViewController()//(datasource: checkedSources)
-        UserDefaults.standard.set(strin, forKey: "source")
-        print("News: \(strin)")
-        
-        NotificationCenter.default.post(name: NSNotification.Name("com.reload.data.success"),
-                     object: nil)
+        let sourceData = dataIndex.id
+        print("SourceData: \(sourceData)")
+        let vc = MainViewController()
+        UserDefaults.standard.set(sourceData, forKey: "source")
         
         navigationController?.pushViewController(vc, animated: true)
         
         
-        
+      
     }
+    
     
     private func removeDuplicateElements(posts: [Source]) -> [Source] {
         var uniquePosts = [Source]()
@@ -89,4 +96,20 @@ class SourceViewController: UITableViewController {
         }
         return uniquePosts
     }
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text, !text.isEmpty else {
+            return
+        }
+        print(text)
+        UserDefaults.standard.set(text, forKey: "sourceSearch")
+        if text != nil {
+            navigationController?.pushViewController(SourceSearchViewController(), animated: false)
+
+            
+        }
+        
+    }
+    
 }
