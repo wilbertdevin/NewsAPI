@@ -73,6 +73,7 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
         title = "Category"
         
         configureComponents()
@@ -80,15 +81,12 @@ class CategoryViewController: UIViewController {
         
         let task = session.dataTask(with: url, completionHandler: { [weak self] data, response, error in
             guard let self = self else { return }
-                //print(error)
-                //print(response)
+   
             if error != nil {
-                //print(error)
                 return
             }
             do {
                 let model = try JSONDecoder().decode(RootClass.self, from: data! )
-//                print("Model:\(model)")
                 
                 self.data = model
 
@@ -111,10 +109,9 @@ class CategoryViewController: UIViewController {
         for source in sources! {
             if(source.category == sourceLabel.text){
                 checkedSource.append(source)
-//                print(source.category)
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -134,7 +131,7 @@ class CategoryViewController: UIViewController {
                 
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -154,7 +151,7 @@ class CategoryViewController: UIViewController {
                 checkedSource.append(source)
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -174,7 +171,7 @@ class CategoryViewController: UIViewController {
                 checkedSource.append(source)
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -193,7 +190,7 @@ class CategoryViewController: UIViewController {
                 checkedSource.append(source)
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -212,7 +209,7 @@ class CategoryViewController: UIViewController {
                 checkedSource.append(source)
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -231,7 +228,7 @@ class CategoryViewController: UIViewController {
                 checkedSource.append(source)
             }
         }
-//
+
         let vc = SourceViewController(datasource: checkedSource)
 
         navigationController?.pushViewController(vc, animated: true)
@@ -245,7 +242,6 @@ class CategoryViewController: UIViewController {
             make.height.equalTo(40)
             make.top.equalTo(200)
             make.leftMargin.equalTo(14)
-          //  make.rightMargin.equalTo(-34)
 
         }
         
@@ -254,7 +250,6 @@ class CategoryViewController: UIViewController {
             make.width.equalTo(160)
             make.height.equalTo(40)
             make.top.equalTo(200)
-         //   make.leftMargin.equalTo(34)
             make.rightMargin.equalTo(-14)
 
         }
@@ -265,7 +260,6 @@ class CategoryViewController: UIViewController {
             make.height.equalTo(40)
             make.top.equalTo(280)
             make.leftMargin.equalTo(14)
-         //   make.rightMargin.equalTo(-14)
 
         }
         
@@ -274,7 +268,6 @@ class CategoryViewController: UIViewController {
             make.width.equalTo(160)
             make.height.equalTo(40)
             make.top.equalTo(280)
-         //   make.leftMargin.equalTo(34)
             make.rightMargin.equalTo(-14)
 
         }
@@ -285,7 +278,6 @@ class CategoryViewController: UIViewController {
             make.height.equalTo(40)
             make.top.equalTo(360)
             make.leftMargin.equalTo(14)
-         //   make.rightMargin.equalTo(-14)
 
         }
         
@@ -294,7 +286,6 @@ class CategoryViewController: UIViewController {
             make.width.equalTo(160)
             make.height.equalTo(40)
             make.top.equalTo(360)
-         //   make.leftMargin.equalTo(34)
             make.rightMargin.equalTo(-14)
 
         }
@@ -305,8 +296,6 @@ class CategoryViewController: UIViewController {
             make.height.equalTo(40)
             make.top.equalTo(440)
             make.centerX.equalToSuperview()
-         //   make.leftMargin.equalTo(34)
-        //    make.rightMargin.equalTo(-14)
 
         }
         
